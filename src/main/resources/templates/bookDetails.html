@@ -1,0 +1,59 @@
+<html>
+<head>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+            font-family: Arial, sans-serif;
+            background-color: aliceblue;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0; /* Remove default margin for h1 */
+        }
+
+        section {
+            float: left;
+            margin: 0 1.5%;
+            width: 63%;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+    </style>
+
+</head>
+<body>
+<!-- dynamically display data -->
+<header>
+        <h1 th:text="${session.currentBook.getTitle()}"></h1>
+</header>
+<section>
+    <h2 th:text="${session.currentBook.getGenre()}"></h2>
+    <h2 th:text="${session.currentBook.getYear()}"></h2>
+    <h2>Authors: </h2>
+    <ul th:each="author : ${session.currentBook.getAuthors()}">
+        <li th:text="${author.getName() + ' ' + author.getSurname()}"></li>
+        <!--<li>Јован Јованов</li>-->
+    </ul>
+</section>
+</body>
+</html>

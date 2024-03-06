@@ -1,0 +1,120 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Add new Author to Book</title>
+  <style type = "text/css">
+    body {
+      width: 800px;
+      margin: auto;
+    }
+    table {
+      width:100%;
+      border-collapse: collapse;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      border-radius: 5px;
+    }
+    table, td, th {
+      border: 1px solid black;
+      padding:10px;
+      border-radius: 10px;
+    }
+    section {
+      float: left;
+      margin: 0 1.5%;
+      width: 63%;
+    }
+    aside {
+      float: right;
+      /*margin: 0 1.5%;*/
+      width: 30%;
+      margin-right: 0px;
+      margin-top: 2px;
+
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: aliceblue;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    main {
+      margin-top: 20px;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    input[type="submit"] {
+      margin-top: 10px;
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* Add the styles to match the second HTML */
+    input[type="radio"]+label {
+      margin-right: 10px;
+      padding: 5px 10px;
+      background-color: #ddd;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    input[type="radio"]:checked+label {
+      background-color: #007BFF;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Select the Author to add to the Book </h1>
+</header>
+<section>
+  <h2>Select author:</h2>
+  <form method="POST" action="/author">
+    <th:block th:each="author: ${listAuthors}">
+      <input type="radio" name="authorId" th:value="${author.getId()}" th:text="${author.getName()} + ' ' + ${author.getSurname()}"><br>
+    </th:block>
+    <input type='submit' value='Add author'>
+  </form>
+
+  <!-- Make changes to this code to dynamically display radio buttons for each author as in the example
+  <input type="radio" name="authorId" value="1"> Petar Petrov <br/>
+  <input type="radio" name="authorId" value="2"> Миле Милев <br/>
+  <input type="radio" name="authorId" value="3"> Ѓорѓи Ѓорѓиев <br/>
+  <br/>
+  -->
+
+
+</section>
+<aside>
+  <table>
+    <tr>
+      <!-- change to show selected book isbn -->
+      <td><b>Book Isbn</b></td>
+      <td><span th:text="${session.currentIsbn}"></span></td>
+    </tr>
+  </table>
+</aside>
+</body>
+</html>

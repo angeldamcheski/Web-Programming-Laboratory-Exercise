@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Book Review Page</title>
+  <style type="text/css">
+    body {
+      width: 1000px;
+      margin: auto;
+      font-family: Arial, sans-serif;
+      border: 2px black;
+      background-color: aliceblue;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+
+    main {
+      margin-top: 20px;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    button {
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    textarea {
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .review-card {
+      border: 1px solid #dddddd;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background: linear-gradient(to right, #fff, whitesmoke);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .review-details {
+      flex-grow: 1;
+    }
+
+    .review-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .add-review-btn {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    a{
+      text-decoration: none;
+      color: #4CAF50;
+    }
+    .add-review-btn:hover {
+      background-color: #45a049;
+    }
+    button.edit-btn {
+      background-color: #007BFF;
+      color: #fff;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button.delete-btn {
+      background-color: #dc3545;
+      color: #fff;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    textarea {
+      width: 100%;
+      margin-top: 10px;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Book Reviews</h1>
+</header>
+<main>
+  <h2>Search Book Reviews</h2>
+  <form method="GET" th:action="'/books/review/search/'+${reviewBook.get().getId()}">
+    <label for="searchQuery">Search:</label>
+    <input type="text" id="searchQuery" name="searchQuery" placeholder="Enter keywords...">
+    <button type="submit" class="edit-btn">Search</button>
+  </form>
+  <h2 th:text="'Reviews for Book: ' + ${reviewBook.get().getTitle()}"></h2>
+  <div th:each="review : ${reviewBook.get().getReviews()}">
+    <div class="review-card">
+      <div class="review-details">
+        <p th:text="'Rating: ' + ${review.getScore()}"></p></br>
+        <p th:text="'Comment: ' + ${review.getDescription()}"></p>
+      </div>
+      <div class="review-actions">
+        <a th:href="'/books/review/edit/'+${review.getId() }"><button type="button" class="edit-btn">Edit</button></a>
+        <a th:href="'/books/review/delete/'+${review.getId()}"><button type="button" class="delete-btn">Delete</button></a>
+      </div>
+    </div>
+  </div>
+
+  <h2>Add a Review</h2>
+  <form method="POST" th:action="'/books/review/add/'+${reviewBook.get().getId()}">
+    <input type="hidden" name="bookId" th:value="${reviewBook.get().getId()}">
+
+
+    <label for="rating">Rating:</label>
+    <input type="number" id="rating" name="rating" min="1" max="5" required>
+
+    <label for="comment">Comment:</label>
+    <textarea id="comment" name="comment" rows="4" required></textarea>
+    <label>Time of review</label>
+    <input type="datetime-local" name="timestamp" />
+
+    <button type="submit" class="add-review-btn">Add Review</button>
+  </form>
+
+  <a href="/books">Back to Books</a>
+</main>
+</body>
+</html>
